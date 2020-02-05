@@ -33,7 +33,7 @@ class User(db.Model):
     @classmethod
     def register(cls, username, password, email, first_name, last_name):
 
-        hashed= bcrypt.generate_password_hash("password")
+        hashed= bcrypt.generate_password_hash(password)
 
         hashed_utf8 = hashed.decode("utf8")
 
@@ -53,3 +53,23 @@ class User(db.Model):
             return u
         else:
             return False
+
+
+class Feedback(db.Model):   
+    """Feedback from the user"""
+
+    __tablename__ = "feedback"
+
+    id = db.Column(db.Integer,
+                   primary_key=True,
+                   autoincrement=True)
+
+    title= db.Column(db.String(100),
+                     nullable=False)
+
+    content = db.Column(db.Text,
+                        nullable=False)
+
+    username = db.Column(db.String,
+                         db.ForeignKey('users.username'))
+    user = db.relationship('User', backref='feedback')

@@ -1,5 +1,5 @@
 from app import app
-from models import db, User
+from models import db, User, Feedback
 
 
 db.drop_all()
@@ -21,5 +21,17 @@ u2 = User(
     last_name="michael"
 )
 
-db.session.add_all([u1, u2])
+f1 = Feedback(
+    title = "This is test feedback",
+    content = "Test content",
+    username = "user1"
+)
+
+f2 = Feedback(
+    title = "This is test feedback, again",
+    content = "Content test",
+    username = "user2"
+)
+
+db.session.add_all([u1, u2, f1, f2])
 db.session.commit()
